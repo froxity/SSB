@@ -22,7 +22,7 @@ def createProfile(sender, instance, created, **kwargs):
             username = user.username,
             email = user.email,
             first_name = user.first_name,
-            last_name = user.last_name,
+            # last_name = user.last_name,
             public_key = new_p_key,
             private_key = new_priv_key,
         )
