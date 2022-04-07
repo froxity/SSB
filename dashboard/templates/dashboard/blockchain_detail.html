@@ -1,97 +1,81 @@
-{% extends 'main.html' %}
-{% load static %}
-{% block customcss %}
-table {
-  table-layout: fixed;
-  width: 50px;  
-}
-{% endblock customcss %}
-
-{% block name %}{{ name }}{% endblock name %}
-{% block email %}{{ email }}{% endblock email %}
-
-{% block breadcrumb %}
+{% extends 'main.html' %} {% load static %} {% block customcss %} table { table-layout: fixed; width: 50px; } {% endblock customcss %} {% block name %}{{ name }}{% endblock name %} {% block email %}{{ email }}{% endblock email %} {% block breadcrumb %}
 <div class="toolbar" id="kt_toolbar">
-  <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-    <!--begin::Page title-->
-    <div class="d-flex align-items-center me-3">
-      <!--begin::Title-->
-      <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">SSB</h1>
-      <!--end::Title-->
-      <!--begin::Separator-->
-      <span class="h-20px border-gray-200 border-start mx-4"></span>
-      <!--end::Separator-->
-      <!--begin::Breadcrumb-->
-      <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-        <!--begin::Item-->
-        <li class="breadcrumb-item text-muted">
-          <a href="{% url 'home' %}" class="text-muted text-hover-primary">Laman Utama</a>
-        </li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <li class="breadcrumb-item">
-          <span class="bullet bg-gray-200 w-5px h-2px"></span>
-        </li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <li class="breadcrumb-item text-muted">Block #{{ block_no }}-{{ detail_block.hash_id }}</li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <!--<li class="breadcrumb-item">
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="d-flex align-items-center me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">SSB</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="{% url 'home' %}" class="text-muted text-hover-primary">Laman Utama</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">Block #{{ block_no }}-{{ detail_block.hash_id }}</li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <!--<li class="breadcrumb-item">
           <span class="bullet bg-gray-200 w-5px h-2px"></span>
         </li>-->
-        <!--end::Item-->
-        <!--begin::Item-->
-        <!--<li class="breadcrumb-item text-dark">None</li>-->
-        <!--end::Item-->
-      </ul>
-      <!--end::Breadcrumb-->
-    </div>
-    <!--end::Page title-->
-    
-  </div>
-</div>
-{% endblock breadcrumb %}
+                <!--end::Item-->
+                <!--begin::Item-->
+                <!--<li class="breadcrumb-item text-dark">None</li>-->
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
 
-{% block content %}
+    </div>
+</div>
+{% endblock breadcrumb %} {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="card shadow-sm">
-      <div class="card-header">
-          <h3 class="card-title">Perincian Blok</h3>
-          <div class="card-toolbar">
-            <a href="{% url 'home' %}">
-              <button class="btn btn-primary">Kembali</button>
-            </a>
-          </div>
-      </div>
-      <div class="card-body">
-        <h5>No. Blok</h4>
-        <p class="mb-4">{{ block_no }}</p>
-        <h5>Hash Id</h5>
-        <p class="mb-4">{{ detail_block.hash_id }}</p>
-        <h5>Hash Sebelumnya</h5>
-        <p class="mb-4">{{ detail_block.prev_hash }}</p>
-        <h5>Maklumat Hash</h5>
-        <p class="mb-4">{{ detail_block.data_hash }}</p>
-        <h5>Tandatangan Digital</h5>
-        <p class="mb-4">{{ detail_block.data_signature }}</p>
-        <h5>Public key</h5>
-        <p class="mb-4">{{ detail_block.public_key }}</p>
-        <h5>Nonce</h5>
-        <p class="mb-4">{{ detail_block.nonce }}</p>
-        <h5>Tarikh</h5>
-        <p class="mb-4">{{ detail_block.timestamp }}</p>
-        
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock content %}
+    <div class="row">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="card-title">Perincian Blok</h3>
+                <div class="card-toolbar">
+                    <a href="{% url 'home' %}">
+                        <button class="btn btn-primary">Kembali</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5>No. Blok</h4>
+                    <p class="mb-4">{{ block_no }}</p>
+                    <h5>Hash Id</h5>
+                    <p class="mb-4">{{ detail_block.hash_id }}</p>
+                    <h5>Hash Sebelumnya</h5>
+                    <p class="mb-4">{{ detail_block.prev_hash }}</p>
+                    <h5>Maklumat Hash</h5>
+                    <p class="mb-4">{{ detail_block.data_hash }}</p>
+                    <h5>Tandatangan Digital</h5>
+                    <p class="mb-4">{{ detail_block.data_signature }}</p>
+                    <h5>Public key</h5>
+                    <p class="mb-4">{{ detail_block.public_key }}</p>
+                    <h5>Nonce</h5>
+                    <p class="mb-4">{{ detail_block.nonce }}</p>
+                    <h5>Tarikh</h5>
+                    <p class="mb-4">{{ detail_block.timestamp }}</p>
 
-{% block customscript %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block customscript %}
 
 <script>
-  $("#kt_datatable_example_1").DataTable();
+    $("#kt_datatable_example_1").DataTable();
 </script>
 {% endblock customscript %}

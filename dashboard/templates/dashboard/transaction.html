@@ -1,123 +1,111 @@
-{% extends 'main.html' %} {% load static %} {% block customcss %} {% endblock
-customcss %} {% block name %}{{ name }}{% endblock name %} {% block email %}{{
-email }}{% endblock email %} {% block breadcrumb %}
+{% extends 'main.html' %} {% load static %} {% block customcss %} {% endblock customcss %} {% block name %}{{ name }}{% endblock name %} {% block email %}{{ email }}{% endblock email %} {% block breadcrumb %}
 <div class="toolbar" id="kt_toolbar">
-  <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-    <!--begin::Page title-->
-    <div class="d-flex align-items-center me-3">
-      <!--begin::Title-->
-      <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">
-        SSB
-      </h1>
-      <!--end::Title-->
-      <!--begin::Separator-->
-      <span class="h-20px border-gray-200 border-start mx-4"></span>
-      <!--end::Separator-->
-      <!--begin::Breadcrumb-->
-      <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-        <!--begin::Item-->
-        <li class="breadcrumb-item text-muted">
-          <a href="{% url 'home' %}" class="text-muted text-hover-primary"
-            >Laman Utama</a
-          >
-        </li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <li class="breadcrumb-item">
-          <span class="bullet bg-gray-200 w-5px h-2px"></span>
-        </li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <li class="breadcrumb-item text-muted">Transaksi</li>
-        <!--end::Item-->
-        <!--begin::Item-->
-        <!--<li class="breadcrumb-item">
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="d-flex align-items-center me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">
+                SSB
+            </h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="{% url 'home' %}" class="text-muted text-hover-primary">Laman Utama</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">Transaksi</li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <!--<li class="breadcrumb-item">
           <span class="bullet bg-gray-200 w-5px h-2px"></span>
         </li>-->
-        <!--end::Item-->
-        <!--begin::Item-->
-        <!--<li class="breadcrumb-item text-dark">None</li>-->
-        <!--end::Item-->
-      </ul>
-      <!--end::Breadcrumb-->
+                <!--end::Item-->
+                <!--begin::Item-->
+                <!--<li class="breadcrumb-item text-dark">None</li>-->
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
     </div>
-    <!--end::Page title-->
-  </div>
 </div>
 {% endblock breadcrumb %} {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-12 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header">
-          <h3 class="card-title">Tambah transaksi baharu</h3>
-          <div class="card-toolbar"></div>
-        </div>
-        <div class="card-body">
-          <form action="{% url 'transaction' %}" method="POST">
-            {% csrf_token %} {% for field in form_transaction %}
-            <label class="form-label">{{field.label}}</label>
-            {{field}} {% endfor %}
-            <button type="submit" name="button1" class="btn btn-primary">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah transaksi baharu</h3>
+                    <div class="card-toolbar"></div>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'transaction' %}" method="POST">
+                        {% csrf_token %} {% for field in form_transaction %}
+                        <label class="form-label">{{field.label}}</label> {{field}} {% endfor %}
+                        <button type="submit" name="button1" class="btn btn-primary">
               Tambah
             </button>
-          </form>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse" data-bs-target="#kt_docs_card_collapsible">
+                    <h3 class="card-title">Rekod Transaksi</h3>
+                    <div class="card-toolbar rotate-180">
+                        <span class="svg-icon svg-icon-1"> ... </span>
+                    </div>
+                </div>
+                <div id="kt_docs_card_collapsible" class="collapse show">
+                    <div class="card-body">
+                        <table id="kt_datatable_example_1" class="table table-row-bordered gy-5">
+                            <thead>
+                                <tr align="center" class="fw-bold fs-6 text-muted">
+                                    <th>No.</th>
+                                    <th>Syarikat Pembeli</th>
+                                    <th>Jenis Barang</th>
+                                    <th>Kuantiti</th>
+                                    <th>Unit jualan</th>
+                                    <th>Harga beli (RM)</th>
+                                    <th>Maklumat Hash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for x in record_list %}
+                                <tr align="center">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ x.company_name_buy }}</td>
+                                    <td>{{ x.item_type }}</td>
+                                    <td>{{ x.quantity }}</td>
+                                    <td>{{ x.unit_of_measurement }}</td>
+                                    <td>{{ x.purchase_price }}</td>
+                                    <td>{{ x.data_hash }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-12">
-      <div class="card shadow-sm">
-        <div
-          class="card-header collapsible cursor-pointer rotate"
-          data-bs-toggle="collapse"
-          data-bs-target="#kt_docs_card_collapsible"
-        >
-          <h3 class="card-title">Rekod Transaksi</h3>
-          <div class="card-toolbar rotate-180">
-            <span class="svg-icon svg-icon-1"> ... </span>
-          </div>
-        </div>
-        <div id="kt_docs_card_collapsible" class="collapse show">
-          <div class="card-body">
-            <table
-              id="kt_datatable_example_1"
-              class="table table-row-bordered gy-5"
-            >
-              <thead>
-                <tr align="center" class="fw-bold fs-6 text-muted">
-                  <th>No.</th>
-                  <th>Syarikat Pembeli</th>
-                  <th>Jenis Barang</th>
-                  <th>Kuantiti</th>
-                  <th>Unit jualan</th>
-                  <th>Harga beli (RM)</th>
-                  <th>Maklumat Hash</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for x in record_list %}
-                <tr align="center">
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ x.company_name_buy }}</td>
-                  <td>{{ x.item_type }}</td>
-                  <td>{{ x.quantity }}</td>
-                  <td>{{ x.unit_of_measurement }}</td>
-                  <td>{{ x.purchase_price }}</td>
-                  <td>{{ x.data_hash }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 {% endblock content %} {% block customscript %}
 
 <script>
-  $("#kt_datatable_example_1").DataTable();
+    $("#kt_datatable_example_1").DataTable();
 </script>
 {% endblock customscript %}
