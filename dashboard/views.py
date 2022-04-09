@@ -98,7 +98,6 @@ def _proof_of_work(previous_proof: str,  data: str) -> int:
 
         return new_proof, hash_id
 
-
 @login_required(login_url="login")
 def blockchain(request):
   # RekodBlokchain.objects.all().delete()
@@ -113,30 +112,6 @@ def blockchain(request):
     'email': email,
   }
   return render(request, 'dashboard/blockchain.html', context)
-  # record_list = profile.rekodharga_set.all()
-  # bc = Blockchain()
-  # for x in record_list:
-  #   temp_dict = {
-  #     'company_name_buy': x.company_name_buy,
-  #     'item_type': x.item_type,
-  #     'quantity': x.quantity,
-  #     # 'unit_of_measurement': x.unit_of_measurement,
-  #     'purchase_price': x.purchase_price,
-  #   }
-  #   encoded_data = json.dumps(temp_dict).encode()
-  #   data_hash = hashlib.sha256(encoded_data).hexdigest()
-  #   bc.mine_block(data_hash)
-  # blockchain_dict = bc.chain
-  # for x in bc.chain:
-  #   RekodBlokchain.objects.create(
-  #     prev_hash = x['previous_hash'],
-  #     data_hash = x['data'],
-  #     data_signature = "1a2fc26dc7ea5a2a4748b7cb2b1ef193d96ab2c99f93092f69e63075b28d1278",
-  #     public_key = '20aab1f98b65f79fc05124309b891903eac6545c31eacef17ca5693597e9531e',
-  #     nonce = x['proof'],
-  #     hash_id = x['hash_id'],
-  #     owner = profile,
-  #   )
   
 @login_required(login_url="login")
 def block_detail(request, pk, block_no):
@@ -158,36 +133,49 @@ def validate_block(request):
   profile = request.user.profile
   name = request.user.first_name
   email = request.user.email
-
-  list_record = RekodHarga.objects.all()
+  # Queryset for rekod harga
+  listRecord = RekodHarga.objects.all()
   # Queryset for recordblokchain
   recordblockchain_queryset = RekodBlokchain.objects.all()
-  # Change queryset to list
+  # Change recordblokchain queryset to list
   recordblockchain_list = list(recordblockchain_queryset)
+  # Remove genisis block from the list
   recordblockchain_list.pop(0)
-  # print(list_record)
-  # print(recordblockchain_list)
-  bc = Blockchain()
-  index = 2 #index starting block no 2 
-  for x in list_record:
-    flag = True
-    for y in recordblockchain_list:
-      temp_dict = {
-        'company_name_buy': x.company_name_buy,
-        'item_type': x.item_type,
-        'quantity': x.quantity,
-        'purchase_price': x.purchase_price,
-      }
-      encoded_data = json.dumps(temp_dict).encode()
-      data_hash = hashlib.sha256(encoded_data).hexdigest()
-      if data_hash == y.data_hash:
-        print("Block #" + str(index) + " still maintain the same")
-        flag = False
-        break
-    if flag:
-      change_flag_status(y.id)
-      print("Block #" + str(index) + " data has changed")
-    index = index + 1
+  # Put all data hash for all record blockchain into another list
+  tempDataHashRecordBlockchain = []
+  tempIDRecordBlockchain = []
+  for x in recordblockchain_list:
+    tempDataHashRecordBlockchain.append(x.data_hash)
+    tempIDRecordBlockchain.append(x.id)
+  print(tempDataHashRecordBlockchain)
+  # Put all list_record encoded data into temporary list
+  tempDataHashRecordTransaction = []
+  for x in listRecord:
+    temp_dict = {
+      'company_name_buy': x.company_name_buy,
+      'item_type': x.item_type,
+      'quantity': x.quantity,
+      'purchase_price': x.purchase_price,
+    }
+    encoded_data = json.dumps(temp_dict).encode()
+    data_hash = hashlib.sha256(encoded_data).hexdigest()
+    tempDataHashRecordTransaction.append(data_hash)
+  # Check is recordchain new data hash encoded is same inside the 
+  # tempDataHashRecordBlockchain
+  index = 0
+  for x in tempDataHashRecordTransaction:
+    if x in tempDataHashRecordBlockchain:
+      id = tempIDRecordBlockchain[index]
+      status = False # Data has NOT changed
+      change_flag_status(id, status)
+      print("Block #" + str(index + 2) + " still maintain the same")
+    else:
+      id = tempIDRecordBlockchain[index]
+      status = True # Data has changed
+      change_flag_status(id, status)
+      print("Block #" + str(index + 2) + " data has changed")
+    index+=1
+  
   
   recordblockchain_list = RekodBlokchain.objects.all()
   context = {
@@ -196,9 +184,8 @@ def validate_block(request):
     'email': email,
   }
   return render(request, 'dashboard/blockchain.html', context)
-  # return redirect('blockchain')
 
-def change_flag_status(id):
+def change_flag_status(id, status):
   blok = RekodBlokchain.objects.get(id=id)
-  blok.flag_status = True
+  blok.flag_status = status
   blok.save()
