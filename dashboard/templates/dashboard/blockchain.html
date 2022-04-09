@@ -41,92 +41,61 @@
     </div>
 </div>
 {% endblock breadcrumb %} {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <h3 class="card-title">Senarai Blok</h3>
-                <div class="card-toolbar">
-                    <a href="{% url 'home' %}">
-                        <button class="btn btn-secondary">Kembali</button>
-                    </a>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="kt_datatable_example_1" class="table table-row-bordered table-hover">
-                        <thead>
-                            <tr class="fw-bold fs-6">
-                                <th>No. Blok</th>
-                                <th>Hash Id</th>
-                                <th>Hash Sebelumnya</th>
-                                <th>Tarikh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for x in recordblockchain_list %} 
-                            {% if x.flag_status == True %}
-                            <tr>
-                              <td>{{ forloop.counter }}</td>
-                              <td>
-                                  <a href="{% url 'block_detail' x.id forloop.counter %}" class="link-primary fw-bolder">
+
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Senarai Blok</h3>
+        <div class="card-toolbar">
+            <a href="{% url 'home' %}">
+                <button class="btn btn-secondary">Kembali</button>
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="kt_datatable_example_1" class="table table-row-bordered table-hover">
+                <thead>
+                    <tr class="fw-bold fs-6">
+                        <th>Tarikh</th>
+                        <th>Hash Id</th>
+                        <th>Hash Sebelumnya</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in recordblockchain_list %} {% if x.flag_status == True %}
+                    <tr>
+                        <td>{{ x.timestamp }}</td>
+                        <td>
+                            <a href="{% url 'block_detail' x.id %}" class="link-primary fw-bolder">
                   {{ x.hash_id }}
                 </a>
-                <span class="badge badge-danger">Error</span>
-                              </td>
-                              <td>{{ x.prev_hash }}</td>
-                              <td>{{ x.timestamp }}</td>
-                          </tr> 
-                            {% else %}
+                        </td>
+                        <td>{{ x.prev_hash }}</td>
+                        <td><span class="badge badge-danger">Error</span></td>
+                    </tr>
+                    {% else %}
 
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>
-                                    <a href="{% url 'block_detail' x.id forloop.counter %}" class="link-primary fw-bolder">
+                    <tr>
+                        <td>{{ x.timestamp }}</td>
+                        <td>
+                            <a href="{% url 'block_detail' x.id %}" class="link-primary fw-bolder">
                     {{ x.hash_id }}
                   </a>
-                  <span class="badge badge-success">Valid</span>
-                                </td>
-                                <td>{{ x.prev_hash }}</td>
-                                <td>{{ x.timestamp }}</td>
-                            </tr>
-                            {% endif %} 
-                            {% endfor %}
-                        </tbody>
-                        {% comment %}
-                        <thead>
-                            <tr class="fw-bolder fs-6 text-gray-800">
-                                <th>Block no.</th>
-                                <th>Hash Id</th>
-                                <th>Previous Hash</th>
-                                <th>Data Hash</th>
-                                <th>Data Signature</th>
-                                <th>Public key</th>
-                                <th>Nonce</th>
-                                <th>Timestamp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for x in recordblockchain_list %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ x.hash_id }}</td>
-                                <td>{{ x.prev_hash }}</td>
-                                <td>{{ x.data_hash }}</td>
-                                <td>{{ x.data_signature }}</td>
-                                <td>{{ x.public_key }}</td>
-                                <td>{{ x.nonce }}</td>
-                                <td>{{ x.timestamp }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        {% endcomment %}
-                    </table>
-                </div>
-            </div>
+
+                        </td>
+                        <td>{{ x.prev_hash }}</td>
+                        <td><span class="badge badge-success">Valid</span></td>
+                    </tr>
+                    {% endif %} {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+
 {% endblock content %} {% block customscript %}
 
 <script>

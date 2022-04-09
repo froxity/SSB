@@ -114,7 +114,7 @@ def blockchain(request):
   return render(request, 'dashboard/blockchain.html', context)
   
 @login_required(login_url="login")
-def block_detail(request, pk, block_no):
+def block_detail(request, pk):
   profile = request.user.profile
   name = request.user.first_name
   email = request.user.email
@@ -122,7 +122,6 @@ def block_detail(request, pk, block_no):
   # print(block.hash_id)
   context = {
     'detail_block' : detail_block,
-    'block_no' : block_no,
     'name': name,
     'email': email,
   }
@@ -137,6 +136,7 @@ def validate_block(request):
   listRecord = RekodHarga.objects.all()
   # Queryset for recordblokchain
   recordblockchain_queryset = RekodBlokchain.objects.all()
+  print(recordblockchain_queryset)
   # Change recordblokchain queryset to list
   recordblockchain_list = list(recordblockchain_queryset)
   # Remove genisis block from the list

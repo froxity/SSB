@@ -35,8 +35,12 @@ class RekodBlokchain(models.Model):
   hash_id = models.CharField(max_length=300)
   flag_status = models.BooleanField(null=True, blank=False)
 
+  class Meta:
+        ordering = ('timestamp',)
+
   def __str__(self):
     return self.data_hash
+  
 
 class UnitOfMeasurement(models.Model):
     id = models.UUIDField(

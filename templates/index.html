@@ -82,8 +82,8 @@
                         <table id="kt_datatable_example_1" class="table table-row-bordered">
                             <thead>
                                 <tr class="fw-bolder fs-6 text-gray-800">
+                                    <!-- <th>No. Blok</th> -->
                                     <th>Tarikh</th>
-                                    <th>No. Blok</th>
                                     <th>Hash Id</th>
                                     <th>Hash Sebelumnya</th>
                                 </tr>
@@ -91,10 +91,10 @@
                             <tbody>
                                 {% for x in recordblockchain_list %}
                                 <tr>
+                                    <!-- <td>{{ forloop.counter }}</td> -->
                                     <td>{{ x.timestamp }}</td>
-                                    <td>{{ forloop.counter }}</td>
                                     <td>
-                                        <a href="{% url 'block_detail' x.id forloop.counter %}" class="link-primary fw-bolder">
+                                        <a href="{% url 'block_detail' x.id %}" class="link-primary fw-bolder">
                       {{ x.hash_id }}
                     </a>
                                     </td>
