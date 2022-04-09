@@ -141,6 +141,32 @@ def validate_block(request):
   recordblockchain_list = list(recordblockchain_queryset)
   # Remove genisis block from the list
   recordblockchain_list.pop(0)
+  
+  index = 0
+  for x in listRecord:
+    status = True
+    id = None
+    for y in recordblockchain_list:
+      id = y.id #a Get Id from record blockchain
+      temp_dict = {
+      'company_name_buy': x.company_name_buy,
+      'item_type': x.item_type,
+      'quantity': x.quantity,
+      'purchase_price': x.purchase_price,
+      }
+      encoded_data = json.dumps(temp_dict).encode()
+      data_hash = hashlib.sha256(encoded_data).hexdigest()
+      if data_hash == y.data_hash:
+        status = False
+        change_flag_status(id, status)
+        print("Block #" + str(index + 2) + " still maintain the same")
+        break
+      
+    change_flag_status(id, status)
+    print("Block #" + str(index + 2) + " data has changed")
+    index += 1
+  
+  """ FOR REFERENCES
   # Put all data hash for all record blockchain into another list
   tempDataHashRecordBlockchain = []
   tempIDRecordBlockchain = []
@@ -175,6 +201,7 @@ def validate_block(request):
       change_flag_status(id, status)
       print("Block #" + str(index + 2) + " data has changed")
     index+=1
+  """
   
   
   recordblockchain_list = RekodBlokchain.objects.all()
