@@ -54,9 +54,9 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="kt_datatable_example_1" class="table table-row-bordered">
+                    <table id="kt_datatable_example_1" class="table table-row-bordered table-hover">
                         <thead>
-                            <tr class="fw-bolder fs-6 text-gray-800">
+                            <tr class="fw-bold fs-6">
                                 <th>No. Blok</th>
                                 <th>Hash Id</th>
                                 <th>Hash Sebelumnya</th>
@@ -64,17 +64,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for x in recordblockchain_list %} {% comment %} {% if %}{% endif %} {% endcomment %}
+                            {% for x in recordblockchain_list %} 
+                            {% if x.flag_status == True %}
+                            <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td>
+                                  <a href="{% url 'block_detail' x.id forloop.counter %}" class="link-primary fw-bolder">
+                  {{ x.hash_id }}
+                </a>
+                <span class="badge badge-danger">Error</span>
+                              </td>
+                              <td>{{ x.prev_hash }}</td>
+                              <td>{{ x.timestamp }}</td>
+                          </tr> 
+                            {% else %}
+
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
                                     <a href="{% url 'block_detail' x.id forloop.counter %}" class="link-primary fw-bolder">
                     {{ x.hash_id }}
                   </a>
+                  <span class="badge badge-success">Valid</span>
                                 </td>
                                 <td>{{ x.prev_hash }}</td>
                                 <td>{{ x.timestamp }}</td>
                             </tr>
+                            {% endif %} 
                             {% endfor %}
                         </tbody>
                         {% comment %}
