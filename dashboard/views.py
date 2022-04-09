@@ -141,29 +141,30 @@ def validate_block(request):
   recordblockchain_list = list(recordblockchain_queryset)
   # Remove genisis block from the list
   recordblockchain_list.pop(0)
-  
+  # a = ['telur', 'ayam']
+  # b = ['ayam','ayam']
   index = 0
-  for x in listRecord:
+  for x in recordblockchain_list:
     status = True
-    id = None
-    for y in recordblockchain_list:
-      id = y.id #a Get Id from record blockchain
+    id = x.id
+    for y in listRecord:
       temp_dict = {
-      'company_name_buy': x.company_name_buy,
-      'item_type': x.item_type,
-      'quantity': x.quantity,
-      'purchase_price': x.purchase_price,
+      'company_name_buy': y.company_name_buy,
+      'item_type': y.item_type,
+      'quantity': y.quantity,
+      'purchase_price': y.purchase_price,
       }
       encoded_data = json.dumps(temp_dict).encode()
       data_hash = hashlib.sha256(encoded_data).hexdigest()
-      if data_hash == y.data_hash:
+      if data_hash == x.data_hash:
         status = False
-        change_flag_status(id, status)
-        print("Block #" + str(index + 2) + " still maintain the same")
         break
-      
-    change_flag_status(id, status)
-    print("Block #" + str(index + 2) + " data has changed")
+    if status:
+      change_flag_status(id, status)
+      print("Block #" + str(index + 2) + " data has changed")
+    else:
+      change_flag_status(id, status)
+      print("Block #" + str(index + 2) + " still maintain the same")
     index += 1
   
   """ FOR REFERENCES

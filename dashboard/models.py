@@ -16,6 +16,9 @@ class RekodHarga(models.Model):
   purchase_price = models.IntegerField(null=False, blank=False)
   data_hash = models.ForeignKey('RekodBlokchain', null=True, blank=True, on_delete=models.SET_NULL)
 
+  class Meta:
+        ordering = ('timestamp',)
+  
   def __str__(self):
     temp = str(self.owner) + ' | ' + str(self.id) + ' | ' + str(self.item_type)
     return temp
