@@ -16,8 +16,8 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=200, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     company_name = models.CharField(max_length=200, null=True, blank=True)
-    public_key = models.TextField( null=True, blank=True)
-    private_key = models.TextField(null=True, blank=True)
+    public_key = models.BinaryField(null=True, blank=True)
+    private_key = models.BinaryField(null=True, blank=True)
 
     def __str__(self):
         return str(self.user.username)

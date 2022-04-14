@@ -81,10 +81,9 @@ def home(request):
     email = request.user.email
     record_list = profile.rekodharga_set.all()
     total_record_list = len(record_list)
-    print(total_record_list)
     recordblockchain_list = RekodBlokchain.objects.all()
     total_block = len(recordblockchain_list)
-    print(total_block)
+    print(recordblockchain_list)    
     context = {
         'total_record_list' : total_record_list,
         'total_block' : total_block,

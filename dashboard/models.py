@@ -32,8 +32,8 @@ class RekodBlokchain(models.Model):
   timestamp = models.DateTimeField(auto_now_add=True)
   prev_hash = models.CharField(max_length=300)
   data_hash = models.CharField(max_length=300)
-  data_signature = models.CharField(max_length=300)
-  public_key = models.CharField(max_length=420)
+  data_signature = models.BinaryField(null=True, blank=True)
+  public_key = models.BinaryField(null=True, blank=True)
   nonce = models.IntegerField(null=False, blank=False)
   hash_id = models.CharField(max_length=300)
   flag_status = models.BooleanField(null=True, blank=False)
@@ -42,7 +42,7 @@ class RekodBlokchain(models.Model):
         ordering = ('timestamp',)
 
   def __str__(self):
-    return self.data_hash
+    return self.hash_id
   
 
 class UnitOfMeasurement(models.Model):

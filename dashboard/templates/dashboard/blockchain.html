@@ -57,6 +57,7 @@
             <table id="kt_datatable_example_1" class="table table-row-bordered table-hover">
                 <thead>
                     <tr class="fw-bold fs-6">
+                        <th>No Blok</th>
                         <th>Tarikh</th>
                         <th>Hash Id</th>
                         <th>Hash Sebelumnya</th>
@@ -64,31 +65,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for x in recordblockchain_list %} {% if x.flag_status == True %}
+                    {% for x in recordblockchain_list %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ x.timestamp }}</td>
                         <td>
                             <a href="{% url 'block_detail' x.id %}" class="link-primary fw-bolder">
-                  {{ x.hash_id }}
-                </a>
+                                {{ x.hash_id }}
+                            </a>
                         </td>
                         <td>{{ x.prev_hash }}</td>
+                        {% if x.flag_status == True %}
                         <td><span class="badge badge-danger">Error</span></td>
-                    </tr>
-                    {% else %}
-
-                    <tr>
-                        <td>{{ x.timestamp }}</td>
-                        <td>
-                            <a href="{% url 'block_detail' x.id %}" class="link-primary fw-bolder">
-                    {{ x.hash_id }}
-                  </a>
-
-                        </td>
-                        <td>{{ x.prev_hash }}</td>
+                        {% else %}
                         <td><span class="badge badge-success">Valid</span></td>
+                        {% endif %}
                     </tr>
-                    {% endif %} {% endfor %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
