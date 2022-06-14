@@ -30,7 +30,7 @@ class RekodBlokchain(models.Model):
   # transaction_id = models.ForeignKey('RekodHarga', null=True, blank=True, on_delete=models.SET_NULL)
   # owner = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, blank=True)
   timestamp = models.DateTimeField(auto_now_add=True)
-  prev_hash = models.CharField(max_length=300)
+  prev_hash = models.CharField(max_length=300, null=True, blank=True)
   data_hash = models.CharField(max_length=300)
   data_signature = models.BinaryField(null=True, blank=True)
   public_key = models.BinaryField(null=True, blank=True)

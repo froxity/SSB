@@ -142,9 +142,21 @@ def block_detail(request, pk=None):
     detail_block = RekodBlokchain.objects.get(id=pk)
   except ObjectDoesNotExist:
     print("Error!")
-  # print(block.hash_id)
+  
+  if detail_block.data_signature == None:
+      digital_signature_base64 = None
+  else:
+      digital_signature_base64 = base64.b64encode(detail_block.data_signature).decode()
+  
+  if detail_block.public_key == None:
+      public_key = None
+  else:
+      public_key = base64.b64encode(detail_block.public_key).decode()
+
   context = {
     'detail_block' : detail_block,
+    'digital_signature_base64': digital_signature_base64,
+    'public_key': public_key,
     'name': name,
     'email': email,
   }
