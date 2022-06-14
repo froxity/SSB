@@ -5,3 +5,4 @@
 .idea/modules.xml
 .idea/SSB.iml
 .idea/vcs.xml
+db.sqlite3
